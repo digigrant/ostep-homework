@@ -1,0 +1,24 @@
+#import "String";
+#import "Basic";
+#import "POSIX";
+#import "Stopwatch";
+
+main :: () {
+    args := get_command_line_arguments();
+    assert(args.count == 3, "sloppy_counter.jai <thread_count> <increment_number>");
+
+    thread_count := parse_int(*args[1]);
+    increment_amount := parse_int(*args[2]);
+    print("Thread count: %\n", thread_count);
+    print("Increment amount: %\n", increment_amount);
+
+    threads : [..] pthread_t;
+    array_reserve(*threads, thread_count);
+    threads.count = thread_count;
+    
+    thread_ids : [..] s32;
+    array_reserve(*thread_ids, thread_count);
+    thread_ids.count = thread_count;
+
+    stopwatch : Stopwatch;
+    StartStopwatch(*stopwatch);
